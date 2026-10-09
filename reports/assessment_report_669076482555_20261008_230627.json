@@ -1,0 +1,241 @@
+{
+  "organization": "SoftwareOne",
+  "brand_promise": "Driven to Deliver",
+  "account_id": "669076482555",
+  "account_arn": "arn:aws:iam::669076482555:user/assessment",
+  "timestamp": "2026-10-08T23:06:27.090350",
+  "summary": {
+    "CRITICAL": 2,
+    "HIGH": 11,
+    "MEDIUM": 6,
+    "LOW": 8,
+    "INFO": 1
+  },
+  "categories": {
+    "Security": 17,
+    "Governance": 5,
+    "Cost & Performance": 2,
+    "Reliability": 2,
+    "Governance & Reliability": 1,
+    "Security & Observability": 1
+  },
+  "total_findings": 28,
+  "findings": [
+    {
+      "service": "IAM",
+      "severity": "CRITICAL",
+      "resource": "Account Root",
+      "issue": "A conta Root NÃO possui MFA (Autenticação Multi-Fator) habilitado.",
+      "remediation": "Ative MFA imediatamente na conta Root no console IAM."
+    },
+    {
+      "service": "IAM",
+      "severity": "HIGH",
+      "resource": "User: assessment_aws",
+      "issue": "Usuário com acesso ao Console Web sem MFA configurado.",
+      "remediation": "Exigir MFA para o usuário 'assessment_aws'."
+    },
+    {
+      "service": "IAM",
+      "severity": "MEDIUM",
+      "resource": "Account: Password Policy",
+      "issue": "Nenhuma política de senha customizada definida para a conta.",
+      "remediation": "Configurar política exigindo mínimo 14 caracteres, números, símbolos e expiração."
+    },
+    {
+      "service": "S3",
+      "severity": "HIGH",
+      "resource": "Account S3 Block Public Access (669076482555)",
+      "issue": "Nenhum 'S3 Block Public Access' configurado na conta.",
+      "remediation": "Ativar S3 Block Public Access globalmente no console S3."
+    },
+    {
+      "service": "S3",
+      "severity": "INFO",
+      "resource": "S3:Buckets",
+      "issue": "Nenhum bucket S3 encontrado na conta.",
+      "remediation": "Nenhuma ação necessária."
+    },
+    {
+      "service": "Network/VPC",
+      "severity": "CRITICAL",
+      "resource": "SG: sg-0c564c91cdf965644 (assessment-web-sg) [us-east-1]",
+      "issue": "Porta 22 (SSH) está aberta diretamente para a Internet (0.0.0.0/0).",
+      "remediation": "Restringir a porta 22 para VPN, Bastion Host ou IPs de origem específicos."
+    },
+    {
+      "service": "Network/VPC",
+      "severity": "MEDIUM",
+      "resource": "VPC: vpc-0140d40c519ff28ee (Default: False) [us-east-1]",
+      "issue": "VPC não possui VPC Flow Logs habilitado para auditoria e monitoramento de tráfego de rede.",
+      "remediation": "Habilitar VPC Flow Logs enviando para o CloudWatch Logs ou bucket S3."
+    },
+    {
+      "service": "Network/VPC",
+      "severity": "MEDIUM",
+      "resource": "VPC: vpc-07e9c8c670c7de1dc (Default: True) [us-east-1]",
+      "issue": "VPC não possui VPC Flow Logs habilitado para auditoria e monitoramento de tráfego de rede.",
+      "remediation": "Habilitar VPC Flow Logs enviando para o CloudWatch Logs ou bucket S3."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Security",
+      "severity": "HIGH",
+      "resource": "EC2: i-0a71c04111576cebb (lab-bastion-win) [us-east-1]",
+      "issue": "Instância permite IMDSv1 (Tokens de metadados opcionais), vulnerável a ataques de SSRF.",
+      "remediation": "Configurar 'HttpTokens=required' para forçar IMDSv2 em todas as instâncias."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Governance",
+      "severity": "LOW",
+      "resource": "EC2: i-0a71c04111576cebb (lab-bastion-win) [us-east-1]",
+      "issue": "Instância sem tags de governança recomendadas: environment, owner.",
+      "remediation": "Adicionar tags padronizadas para alocação de custos e rastreabilidade."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Governance",
+      "severity": "LOW",
+      "resource": "EC2: i-0fa15e5eb4455312f (lab-app-backend) [us-east-1]",
+      "issue": "Instância sem tags de governança recomendadas: environment, owner.",
+      "remediation": "Adicionar tags padronizadas para alocação de custos e rastreabilidade."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Security",
+      "severity": "HIGH",
+      "resource": "EC2: i-0152d2c6f4ed60855 (lab-database-cache) [us-east-1]",
+      "issue": "Instância permite IMDSv1 (Tokens de metadados opcionais), vulnerável a ataques de SSRF.",
+      "remediation": "Configurar 'HttpTokens=required' para forçar IMDSv2 em todas as instâncias."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Governance",
+      "severity": "LOW",
+      "resource": "EC2: i-0152d2c6f4ed60855 (lab-database-cache) [us-east-1]",
+      "issue": "Instância sem tags de governança recomendadas: environment, owner.",
+      "remediation": "Adicionar tags padronizadas para alocação de custos e rastreabilidade."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Governance",
+      "severity": "LOW",
+      "resource": "EC2: i-00cc032ee2effef12 (lab-web-frontend) [us-east-1]",
+      "issue": "Instância sem tags de governança recomendadas: environment, owner.",
+      "remediation": "Adicionar tags padronizadas para alocação de custos e rastreabilidade."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Security",
+      "severity": "HIGH",
+      "resource": "EC2: i-03721e04ee72d3e95 (lab-legacy-service) [us-east-1]",
+      "issue": "Instância permite IMDSv1 (Tokens de metadados opcionais), vulnerável a ataques de SSRF.",
+      "remediation": "Configurar 'HttpTokens=required' para forçar IMDSv2 em todas as instâncias."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Governance",
+      "severity": "LOW",
+      "resource": "EC2: i-03721e04ee72d3e95 (lab-legacy-service) [us-east-1]",
+      "issue": "Instância sem tags de governança recomendadas: environment, owner.",
+      "remediation": "Adicionar tags padronizadas para alocação de custos e rastreabilidade."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Security",
+      "severity": "HIGH",
+      "resource": "EBS: vol-0ab931044036f569e (10GB) [us-east-1]",
+      "issue": "Volume EBS não está criptografado em repouso (at-rest).",
+      "remediation": "Habilitar criptografia padrão na conta e criptografar volumes via snapshot/KMS."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Security",
+      "severity": "HIGH",
+      "resource": "EBS: vol-086c88a88bf0a6324 (8GB) [us-east-1]",
+      "issue": "Volume EBS não está criptografado em repouso (at-rest).",
+      "remediation": "Habilitar criptografia padrão na conta e criptografar volumes via snapshot/KMS."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Security",
+      "severity": "HIGH",
+      "resource": "EBS: vol-09cbd35ff1a752489 (8GB) [us-east-1]",
+      "issue": "Volume EBS não está criptografado em repouso (at-rest).",
+      "remediation": "Habilitar criptografia padrão na conta e criptografar volumes via snapshot/KMS."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Security",
+      "severity": "HIGH",
+      "resource": "EBS: vol-081a1c02d41ee925d (8GB) [us-east-1]",
+      "issue": "Volume EBS não está criptografado em repouso (at-rest).",
+      "remediation": "Habilitar criptografia padrão na conta e criptografar volumes via snapshot/KMS."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Security",
+      "severity": "HIGH",
+      "resource": "EBS: vol-0bc6b71be0ad04bb3 (30GB) [us-east-1]",
+      "issue": "Volume EBS não está criptografado em repouso (at-rest).",
+      "remediation": "Habilitar criptografia padrão na conta e criptografar volumes via snapshot/KMS."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Cost & Performance",
+      "severity": "MEDIUM",
+      "resource": "EBS: vol-0bc6b71be0ad04bb3 (30GB, gp2) [us-east-1]",
+      "issue": "Volume utiliza tipo legado 'gp2'. O tipo 'gp3' oferece 3000 IOPS de base e custa 20% menos.",
+      "remediation": "Modificar tipo do volume de gp2 para gp3 via Elastic Volumes sem downtime."
+    },
+    {
+      "service": "RDS",
+      "category": "Security",
+      "severity": "HIGH",
+      "resource": "RDS: assessment-lab-db (postgres) [us-east-1]",
+      "issue": "Armazenamento do banco RDS não está criptografado com AWS KMS.",
+      "remediation": "Criar snapshot, copiar o snapshot com criptografia KMS habilitada e restaurar."
+    },
+    {
+      "service": "RDS",
+      "category": "Reliability",
+      "severity": "MEDIUM",
+      "resource": "RDS: assessment-lab-db (postgres) [us-east-1]",
+      "issue": "Banco opera em Single-AZ (sem réplica síncrona de failover em outra AZ).",
+      "remediation": "Para ambientes de produção, habilitar Multi-AZ para garantir failover automático e RTO/RPO."
+    },
+    {
+      "service": "RDS",
+      "category": "Reliability",
+      "severity": "MEDIUM",
+      "resource": "RDS: assessment-lab-db (postgres) [us-east-1]",
+      "issue": "Janela de retenção de backup automatizado muito baixa (1 dia(s)).",
+      "remediation": "Aumentar o período de retenção para no mínimo 7 a 30 dias para possibilitar Point-In-Time Restore (PITR)."
+    },
+    {
+      "service": "RDS",
+      "category": "Cost & Performance",
+      "severity": "LOW",
+      "resource": "RDS: assessment-lab-db (postgres) [us-east-1]",
+      "issue": "Armazenamento tipo 'gp2'. O tipo 'gp3' reduz custo em até 20% e desacopla IOPS de tamanho.",
+      "remediation": "Modificar a classe de armazenamento de gp2 para gp3 no RDS."
+    },
+    {
+      "service": "RDS",
+      "category": "Governance & Reliability",
+      "severity": "LOW",
+      "resource": "RDS: assessment-lab-db (postgres) [us-east-1]",
+      "issue": "Proteção contra exclusão acidental (Deletion Protection) desativada.",
+      "remediation": "Habilitar Deletion Protection no console ou via CLI para evitar queda acidental."
+    },
+    {
+      "service": "Route 53",
+      "category": "Security & Observability",
+      "severity": "LOW",
+      "resource": "Route53: lab.corp.internal. (Z03201471GLJFE5HAFQXF) [Privada]",
+      "issue": "Query Logging de DNS não configurado para envio ao CloudWatch Logs.",
+      "remediation": "Habilitar Route 53 Query Logging para auditoria forense e rastreabilidade."
+    }
+  ]
+}

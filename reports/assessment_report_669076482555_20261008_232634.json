@@ -1,0 +1,149 @@
+{
+  "organization": "SoftwareOne",
+  "brand_promise": "Driven to Deliver",
+  "account_id": "669076482555",
+  "account_arn": "arn:aws:iam::669076482555:user/assessment",
+  "timestamp": "2026-10-08T23:26:34.117508",
+  "summary": {
+    "CRITICAL": 2,
+    "HIGH": 5,
+    "MEDIUM": 3,
+    "LOW": 5,
+    "INFO": 2
+  },
+  "categories": {
+    "Security": 12,
+    "Governance": 5
+  },
+  "total_findings": 17,
+  "findings": [
+    {
+      "service": "IAM",
+      "severity": "CRITICAL",
+      "resource": "Account Root",
+      "issue": "A conta Root NÃO possui MFA (Autenticação Multi-Fator) habilitado.",
+      "remediation": "Ative MFA imediatamente na conta Root no console IAM."
+    },
+    {
+      "service": "IAM",
+      "severity": "HIGH",
+      "resource": "User: assessment_aws",
+      "issue": "Usuário com acesso ao Console Web sem MFA configurado.",
+      "remediation": "Exigir MFA para o usuário 'assessment_aws'."
+    },
+    {
+      "service": "IAM",
+      "severity": "MEDIUM",
+      "resource": "Account: Password Policy",
+      "issue": "Nenhuma política de senha customizada definida para a conta.",
+      "remediation": "Configurar política exigindo mínimo 14 caracteres, números, símbolos e expiração."
+    },
+    {
+      "service": "S3",
+      "severity": "HIGH",
+      "resource": "Account S3 Block Public Access (669076482555)",
+      "issue": "Nenhum 'S3 Block Public Access' configurado na conta.",
+      "remediation": "Ativar S3 Block Public Access globalmente no console S3."
+    },
+    {
+      "service": "S3",
+      "severity": "INFO",
+      "resource": "S3:Buckets",
+      "issue": "Nenhum bucket S3 encontrado na conta.",
+      "remediation": "Nenhuma ação necessária."
+    },
+    {
+      "service": "Network/VPC",
+      "severity": "CRITICAL",
+      "resource": "SG: sg-0c564c91cdf965644 (assessment-web-sg) [us-east-1]",
+      "issue": "Porta 22 (SSH) está aberta diretamente para a Internet (0.0.0.0/0).",
+      "remediation": "Restringir a porta 22 para VPN, Bastion Host ou IPs de origem específicos."
+    },
+    {
+      "service": "Network/VPC",
+      "severity": "MEDIUM",
+      "resource": "VPC: vpc-0140d40c519ff28ee (Default: False) [us-east-1]",
+      "issue": "VPC não possui VPC Flow Logs habilitado para auditoria e monitoramento de tráfego de rede.",
+      "remediation": "Habilitar VPC Flow Logs enviando para o CloudWatch Logs ou bucket S3."
+    },
+    {
+      "service": "Network/VPC",
+      "severity": "MEDIUM",
+      "resource": "VPC: vpc-07e9c8c670c7de1dc (Default: True) [us-east-1]",
+      "issue": "VPC não possui VPC Flow Logs habilitado para auditoria e monitoramento de tráfego de rede.",
+      "remediation": "Habilitar VPC Flow Logs enviando para o CloudWatch Logs ou bucket S3."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Security",
+      "severity": "HIGH",
+      "resource": "EC2: i-0a71c04111576cebb (lab-bastion-win) [us-east-1]",
+      "issue": "Instância permite IMDSv1 (Tokens de metadados opcionais), vulnerável a ataques de SSRF.",
+      "remediation": "Configurar 'HttpTokens=required' para forçar IMDSv2 em todas as instâncias."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Governance",
+      "severity": "LOW",
+      "resource": "EC2: i-0a71c04111576cebb (lab-bastion-win) [us-east-1]",
+      "issue": "Instância sem tags de governança recomendadas: environment, owner.",
+      "remediation": "Adicionar tags padronizadas para alocação de custos e rastreabilidade."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Governance",
+      "severity": "LOW",
+      "resource": "EC2: i-0fa15e5eb4455312f (lab-app-backend) [us-east-1]",
+      "issue": "Instância sem tags de governança recomendadas: environment, owner.",
+      "remediation": "Adicionar tags padronizadas para alocação de custos e rastreabilidade."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Security",
+      "severity": "HIGH",
+      "resource": "EC2: i-0152d2c6f4ed60855 (lab-database-cache) [us-east-1]",
+      "issue": "Instância permite IMDSv1 (Tokens de metadados opcionais), vulnerável a ataques de SSRF.",
+      "remediation": "Configurar 'HttpTokens=required' para forçar IMDSv2 em todas as instâncias."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Governance",
+      "severity": "LOW",
+      "resource": "EC2: i-0152d2c6f4ed60855 (lab-database-cache) [us-east-1]",
+      "issue": "Instância sem tags de governança recomendadas: environment, owner.",
+      "remediation": "Adicionar tags padronizadas para alocação de custos e rastreabilidade."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Governance",
+      "severity": "LOW",
+      "resource": "EC2: i-00cc032ee2effef12 (lab-web-frontend) [us-east-1]",
+      "issue": "Instância sem tags de governança recomendadas: environment, owner.",
+      "remediation": "Adicionar tags padronizadas para alocação de custos e rastreabilidade."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Security",
+      "severity": "HIGH",
+      "resource": "EC2: i-03721e04ee72d3e95 (lab-legacy-service) [us-east-1]",
+      "issue": "Instância permite IMDSv1 (Tokens de metadados opcionais), vulnerável a ataques de SSRF.",
+      "remediation": "Configurar 'HttpTokens=required' para forçar IMDSv2 em todas as instâncias."
+    },
+    {
+      "service": "EC2/EBS",
+      "category": "Governance",
+      "severity": "LOW",
+      "resource": "EC2: i-03721e04ee72d3e95 (lab-legacy-service) [us-east-1]",
+      "issue": "Instância sem tags de governança recomendadas: environment, owner.",
+      "remediation": "Adicionar tags padronizadas para alocação de custos e rastreabilidade."
+    },
+    {
+      "service": "Route 53",
+      "category": "Security",
+      "severity": "INFO",
+      "resource": "Route53:Zones",
+      "issue": "Nenhuma zona hospedada encontrada.",
+      "remediation": "Nenhuma ação necessária."
+    }
+  ]
+}

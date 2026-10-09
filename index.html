@@ -2,11 +2,21 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>SoftwareOne — AWS Infrastructure Assessment &amp; Well-Architected</title>
+
+<!-- Favicons Oficiais SoftwareOne -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- Fontes -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
     @page {
         size: A4 landscape;
@@ -306,7 +316,7 @@
         font-size: 12.5px;
     }
 
-    /* Table */
+    /* Desktop Table */
     .table-container {
         overflow-x: auto;
         background: #ffffff;
@@ -360,10 +370,52 @@
         border-left: 3px solid #000000;
         line-height: 1.4;
     }
+    .rem-title {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+        color: #737373;
+        margin-bottom: 4px;
+        font-family: 'Inter', sans-serif;
+    }
     .text-center { text-align: center; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     .text-sm { font-size: 11.5px; }
     .text-muted { color: #737373; }
+
+    /* Mobile Findings Cards (Oculto no Desktop) */
+    .mobile-findings-wrapper {
+        display: none;
+        flex-direction: column;
+        gap: 14px;
+    }
+    .mobile-finding-card {
+        background: #ffffff;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    }
+    .m-card-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+    }
+    .m-card-resource {
+        font-size: 13px;
+        font-family: 'JetBrains Mono', monospace;
+        margin-bottom: 8px;
+        color: #000000;
+    }
+    .m-card-issue {
+        font-size: 12.5px;
+        color: #404040;
+        margin-bottom: 12px;
+        line-height: 1.45;
+    }
 
     /* Footer */
     .footer {
@@ -375,9 +427,110 @@
         align-items: center;
         font-size: 11.5px;
         color: #525252;
+        flex-wrap: wrap;
+        gap: 12px;
     }
     .footer strong {
         color: #000000;
+    }
+
+    /* RESPONSIVIDADE PARA CELULAR (SMARTPHONES < 768px) */
+    @media screen and (max-width: 768px) {
+        body {
+            padding: 8px;
+            font-size: 12px;
+        }
+        .page-wrapper {
+            padding: 16px 14px;
+            border-radius: 6px;
+        }
+        .brand-strap {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            font-size: 9.5px;
+            margin-bottom: 16px;
+        }
+        .header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+            padding-bottom: 18px;
+            margin-bottom: 20px;
+        }
+        .header-left {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .header-logo img {
+            height: 42px;
+        }
+        .header-title h1 {
+            font-size: 18px;
+        }
+        .header-title p {
+            font-size: 11.5px;
+        }
+        .header-meta {
+            text-align: left;
+            font-size: 10px;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 10px;
+            width: 100%;
+        }
+        .actions-bar {
+            justify-content: stretch;
+            margin-bottom: 16px;
+        }
+        .actions-bar .btn {
+            width: 100%;
+            justify-content: center;
+        }
+        /* KPIs no Celular: 2 colunas com Score ocupando largura total */
+        .grid-kpis {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        .kpi-score {
+            grid-column: span 2;
+            padding: 16px;
+        }
+        .kpi-score .score-val {
+            font-size: 38px;
+        }
+        .kpi-card {
+            padding: 12px;
+        }
+        .kpi-num {
+            font-size: 22px;
+        }
+        /* Roadmap no Celular: Empilhado */
+        .grid-3col {
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        /* Esconde tabela pesada e ativa Cards Mobile */
+        .table-container {
+            display: none;
+        }
+        .mobile-findings-wrapper {
+            display: flex;
+        }
+        .section-title {
+            font-size: 14px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            margin: 28px 0 14px 0;
+        }
+        .footer {
+            flex-direction: column;
+            align-items: flex-start;
+            font-size: 10.5px;
+        }
     }
 
     /* PRINT MEDIA (A4 LANDSCAPE) */
@@ -395,6 +548,12 @@
         }
         .actions-bar {
             display: none !important;
+        }
+        .mobile-findings-wrapper {
+            display: none !important;
+        }
+        .table-container {
+            display: block !important;
         }
         tr {
             page-break-inside: avoid !important;
@@ -414,7 +573,7 @@
         <span class="slogan">ALL IN ONE — DRIVEN TO DELIVER</span>
     </div>
 
-    <!-- Actions Bar (Apenas Web) -->
+    <!-- Actions Bar (Web Only) -->
     <div class="actions-bar">
         <button class="btn btn-primary" onclick="window.print()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
@@ -435,7 +594,7 @@
         </div>
         <div class="header-meta">
             <div>ACCOUNT ID: <strong>669076482555</strong></div>
-            <div>DATA DE EMISSÃO: <strong>08/10/2026 às 23:13</strong></div>
+            <div>DATA DE EMISSÃO: <strong>08/10/2026 às 23:26</strong></div>
             <div>IDENTIDADE AUDITORA: <strong>assessment</strong></div>
             <div>BENCHMARKS: <strong>CIS AWS Foundations v3.0 | Well-Architected</strong></div>
         </div>
@@ -444,12 +603,12 @@
     <!-- KPI Cards & Maturity Index -->
     <div class="grid-kpis">
         <div class="kpi-card kpi-score">
-            <div class="score-val">10</div>
+            <div class="score-val">39</div>
             <div class="score-label">Índice de Maturidade</div>
         </div>
         <div class="kpi-card">
             <div class="kpi-title">Total Apontamentos</div>
-            <div class="kpi-num">28</div>
+            <div class="kpi-num">17</div>
             <div class="kpi-sub">Itens avaliados na infraestrutura</div>
         </div>
         <div class="kpi-card">
@@ -459,17 +618,17 @@
         </div>
         <div class="kpi-card">
             <div class="kpi-title">🟠 Alto</div>
-            <div class="kpi-num">11</div>
+            <div class="kpi-num">5</div>
             <div class="kpi-sub">Vulnerabilidade estrutural</div>
         </div>
         <div class="kpi-card">
             <div class="kpi-title">🟡 Médio (FinOps/HA)</div>
-            <div class="kpi-num">6</div>
+            <div class="kpi-num">3</div>
             <div class="kpi-sub">Oportunidades de custo &amp; DR</div>
         </div>
         <div class="kpi-card">
             <div class="kpi-title">🔵 Baixo / Governança</div>
-            <div class="kpi-num">8</div>
+            <div class="kpi-num">5</div>
             <div class="kpi-sub">Padronização de tags &amp; políticas</div>
         </div>
     </div>
@@ -482,7 +641,7 @@
 
     <div class="grid-3col">
         <div class="plan-card">
-            <h3>Fase 1: Quick-Wins &amp; Estancamento de Risco <span class="horizon">0 a 15 Dias</span></h3>
+            <h3>Fase 1: Quick-Wins &amp; Estancamento <span class="horizon">0 a 15 Dias</span></h3>
             <ul class="plan-list">
                 <li><strong>MFA Obrigatório no Root &amp; Console IAM</strong>Blindagem imediata das credenciais mestras e imposição de MFA via política para todos os usuários com acesso console.</li>
                 <li><strong>Fechamento do Perímetro Externo (SG 0.0.0.0/0)</strong>Remover exposição pública direta das portas 22 (SSH) e 3389 (RDP). Adotar AWS Systems Manager (SSM) Session Manager ou Bastion privado.</li>
@@ -507,7 +666,7 @@
         </div>
     </div>
 
-    <!-- Tabela Detalhada dos Apontamentos Técnicos -->
+    <!-- Tabela Detalhada (Desktop) -->
     <div class="section-title">
         Inventário Detalhado de Apontamentos &amp; Recomendações Técnicas
         <span>Classificado rigorosamente por criticidade decrescente</span>
@@ -592,60 +751,6 @@
             
             <tr>
                 <td class="text-center font-mono">#08</td>
-                <td><span class="badge badge-high">HIGH</span></td>
-                <td class="font-mono text-sm"><strong>EBS: vol-0ab931044036f569e (10GB) [us-east-1]</strong><br><span class="text-muted">AWS EC2/EBS</span></td>
-                <td><span class="category-tag">Security</span></td>
-                <td>Volume EBS não está criptografado em repouso (at-rest).</td>
-                <td class="remediation-cell">Habilitar criptografia padrão na conta e criptografar volumes via snapshot/KMS.</td>
-            </tr>
-            
-            <tr>
-                <td class="text-center font-mono">#09</td>
-                <td><span class="badge badge-high">HIGH</span></td>
-                <td class="font-mono text-sm"><strong>EBS: vol-086c88a88bf0a6324 (8GB) [us-east-1]</strong><br><span class="text-muted">AWS EC2/EBS</span></td>
-                <td><span class="category-tag">Security</span></td>
-                <td>Volume EBS não está criptografado em repouso (at-rest).</td>
-                <td class="remediation-cell">Habilitar criptografia padrão na conta e criptografar volumes via snapshot/KMS.</td>
-            </tr>
-            
-            <tr>
-                <td class="text-center font-mono">#10</td>
-                <td><span class="badge badge-high">HIGH</span></td>
-                <td class="font-mono text-sm"><strong>EBS: vol-09cbd35ff1a752489 (8GB) [us-east-1]</strong><br><span class="text-muted">AWS EC2/EBS</span></td>
-                <td><span class="category-tag">Security</span></td>
-                <td>Volume EBS não está criptografado em repouso (at-rest).</td>
-                <td class="remediation-cell">Habilitar criptografia padrão na conta e criptografar volumes via snapshot/KMS.</td>
-            </tr>
-            
-            <tr>
-                <td class="text-center font-mono">#11</td>
-                <td><span class="badge badge-high">HIGH</span></td>
-                <td class="font-mono text-sm"><strong>EBS: vol-081a1c02d41ee925d (8GB) [us-east-1]</strong><br><span class="text-muted">AWS EC2/EBS</span></td>
-                <td><span class="category-tag">Security</span></td>
-                <td>Volume EBS não está criptografado em repouso (at-rest).</td>
-                <td class="remediation-cell">Habilitar criptografia padrão na conta e criptografar volumes via snapshot/KMS.</td>
-            </tr>
-            
-            <tr>
-                <td class="text-center font-mono">#12</td>
-                <td><span class="badge badge-high">HIGH</span></td>
-                <td class="font-mono text-sm"><strong>EBS: vol-0bc6b71be0ad04bb3 (30GB) [us-east-1]</strong><br><span class="text-muted">AWS EC2/EBS</span></td>
-                <td><span class="category-tag">Security</span></td>
-                <td>Volume EBS não está criptografado em repouso (at-rest).</td>
-                <td class="remediation-cell">Habilitar criptografia padrão na conta e criptografar volumes via snapshot/KMS.</td>
-            </tr>
-            
-            <tr>
-                <td class="text-center font-mono">#13</td>
-                <td><span class="badge badge-high">HIGH</span></td>
-                <td class="font-mono text-sm"><strong>RDS: assessment-lab-db (postgres) [us-east-1]</strong><br><span class="text-muted">AWS RDS</span></td>
-                <td><span class="category-tag">Security</span></td>
-                <td>Armazenamento do banco RDS não está criptografado com AWS KMS.</td>
-                <td class="remediation-cell">Criar snapshot, copiar o snapshot com criptografia KMS habilitada e restaurar.</td>
-            </tr>
-            
-            <tr>
-                <td class="text-center font-mono">#14</td>
                 <td><span class="badge badge-medium">MEDIUM</span></td>
                 <td class="font-mono text-sm"><strong>Account: Password Policy</strong><br><span class="text-muted">AWS IAM</span></td>
                 <td><span class="category-tag">Security</span></td>
@@ -654,7 +759,7 @@
             </tr>
             
             <tr>
-                <td class="text-center font-mono">#15</td>
+                <td class="text-center font-mono">#09</td>
                 <td><span class="badge badge-medium">MEDIUM</span></td>
                 <td class="font-mono text-sm"><strong>VPC: vpc-0140d40c519ff28ee (Default: False) [us-east-1]</strong><br><span class="text-muted">AWS Network/VPC</span></td>
                 <td><span class="category-tag">Security</span></td>
@@ -663,7 +768,7 @@
             </tr>
             
             <tr>
-                <td class="text-center font-mono">#16</td>
+                <td class="text-center font-mono">#10</td>
                 <td><span class="badge badge-medium">MEDIUM</span></td>
                 <td class="font-mono text-sm"><strong>VPC: vpc-07e9c8c670c7de1dc (Default: True) [us-east-1]</strong><br><span class="text-muted">AWS Network/VPC</span></td>
                 <td><span class="category-tag">Security</span></td>
@@ -672,34 +777,7 @@
             </tr>
             
             <tr>
-                <td class="text-center font-mono">#17</td>
-                <td><span class="badge badge-medium">MEDIUM</span></td>
-                <td class="font-mono text-sm"><strong>EBS: vol-0bc6b71be0ad04bb3 (30GB, gp2) [us-east-1]</strong><br><span class="text-muted">AWS EC2/EBS</span></td>
-                <td><span class="category-tag">Cost & Performance</span></td>
-                <td>Volume utiliza tipo legado 'gp2'. O tipo 'gp3' oferece 3000 IOPS de base e custa 20% menos.</td>
-                <td class="remediation-cell">Modificar tipo do volume de gp2 para gp3 via Elastic Volumes sem downtime.</td>
-            </tr>
-            
-            <tr>
-                <td class="text-center font-mono">#18</td>
-                <td><span class="badge badge-medium">MEDIUM</span></td>
-                <td class="font-mono text-sm"><strong>RDS: assessment-lab-db (postgres) [us-east-1]</strong><br><span class="text-muted">AWS RDS</span></td>
-                <td><span class="category-tag">Reliability</span></td>
-                <td>Banco opera em Single-AZ (sem réplica síncrona de failover em outra AZ).</td>
-                <td class="remediation-cell">Para ambientes de produção, habilitar Multi-AZ para garantir failover automático e RTO/RPO.</td>
-            </tr>
-            
-            <tr>
-                <td class="text-center font-mono">#19</td>
-                <td><span class="badge badge-medium">MEDIUM</span></td>
-                <td class="font-mono text-sm"><strong>RDS: assessment-lab-db (postgres) [us-east-1]</strong><br><span class="text-muted">AWS RDS</span></td>
-                <td><span class="category-tag">Reliability</span></td>
-                <td>Janela de retenção de backup automatizado muito baixa (1 dia(s)).</td>
-                <td class="remediation-cell">Aumentar o período de retenção para no mínimo 7 a 30 dias para possibilitar Point-In-Time Restore (PITR).</td>
-            </tr>
-            
-            <tr>
-                <td class="text-center font-mono">#20</td>
+                <td class="text-center font-mono">#11</td>
                 <td><span class="badge badge-low">LOW</span></td>
                 <td class="font-mono text-sm"><strong>EC2: i-0a71c04111576cebb (lab-bastion-win) [us-east-1]</strong><br><span class="text-muted">AWS EC2/EBS</span></td>
                 <td><span class="category-tag">Governance</span></td>
@@ -708,7 +786,7 @@
             </tr>
             
             <tr>
-                <td class="text-center font-mono">#21</td>
+                <td class="text-center font-mono">#12</td>
                 <td><span class="badge badge-low">LOW</span></td>
                 <td class="font-mono text-sm"><strong>EC2: i-0fa15e5eb4455312f (lab-app-backend) [us-east-1]</strong><br><span class="text-muted">AWS EC2/EBS</span></td>
                 <td><span class="category-tag">Governance</span></td>
@@ -717,7 +795,7 @@
             </tr>
             
             <tr>
-                <td class="text-center font-mono">#22</td>
+                <td class="text-center font-mono">#13</td>
                 <td><span class="badge badge-low">LOW</span></td>
                 <td class="font-mono text-sm"><strong>EC2: i-0152d2c6f4ed60855 (lab-database-cache) [us-east-1]</strong><br><span class="text-muted">AWS EC2/EBS</span></td>
                 <td><span class="category-tag">Governance</span></td>
@@ -726,7 +804,7 @@
             </tr>
             
             <tr>
-                <td class="text-center font-mono">#23</td>
+                <td class="text-center font-mono">#14</td>
                 <td><span class="badge badge-low">LOW</span></td>
                 <td class="font-mono text-sm"><strong>EC2: i-00cc032ee2effef12 (lab-web-frontend) [us-east-1]</strong><br><span class="text-muted">AWS EC2/EBS</span></td>
                 <td><span class="category-tag">Governance</span></td>
@@ -735,7 +813,7 @@
             </tr>
             
             <tr>
-                <td class="text-center font-mono">#24</td>
+                <td class="text-center font-mono">#15</td>
                 <td><span class="badge badge-low">LOW</span></td>
                 <td class="font-mono text-sm"><strong>EC2: i-03721e04ee72d3e95 (lab-legacy-service) [us-east-1]</strong><br><span class="text-muted">AWS EC2/EBS</span></td>
                 <td><span class="category-tag">Governance</span></td>
@@ -744,34 +822,7 @@
             </tr>
             
             <tr>
-                <td class="text-center font-mono">#25</td>
-                <td><span class="badge badge-low">LOW</span></td>
-                <td class="font-mono text-sm"><strong>RDS: assessment-lab-db (postgres) [us-east-1]</strong><br><span class="text-muted">AWS RDS</span></td>
-                <td><span class="category-tag">Cost & Performance</span></td>
-                <td>Armazenamento tipo 'gp2'. O tipo 'gp3' reduz custo em até 20% e desacopla IOPS de tamanho.</td>
-                <td class="remediation-cell">Modificar a classe de armazenamento de gp2 para gp3 no RDS.</td>
-            </tr>
-            
-            <tr>
-                <td class="text-center font-mono">#26</td>
-                <td><span class="badge badge-low">LOW</span></td>
-                <td class="font-mono text-sm"><strong>RDS: assessment-lab-db (postgres) [us-east-1]</strong><br><span class="text-muted">AWS RDS</span></td>
-                <td><span class="category-tag">Governance & Reliability</span></td>
-                <td>Proteção contra exclusão acidental (Deletion Protection) desativada.</td>
-                <td class="remediation-cell">Habilitar Deletion Protection no console ou via CLI para evitar queda acidental.</td>
-            </tr>
-            
-            <tr>
-                <td class="text-center font-mono">#27</td>
-                <td><span class="badge badge-low">LOW</span></td>
-                <td class="font-mono text-sm"><strong>Route53: lab.corp.internal. (Z03201471GLJFE5HAFQXF) [Privada]</strong><br><span class="text-muted">AWS Route 53</span></td>
-                <td><span class="category-tag">Security & Observability</span></td>
-                <td>Query Logging de DNS não configurado para envio ao CloudWatch Logs.</td>
-                <td class="remediation-cell">Habilitar Route 53 Query Logging para auditoria forense e rastreabilidade.</td>
-            </tr>
-            
-            <tr>
-                <td class="text-center font-mono">#28</td>
+                <td class="text-center font-mono">#16</td>
                 <td><span class="badge badge-info">INFO</span></td>
                 <td class="font-mono text-sm"><strong>S3:Buckets</strong><br><span class="text-muted">AWS S3</span></td>
                 <td><span class="category-tag">Security</span></td>
@@ -779,8 +830,345 @@
                 <td class="remediation-cell">Nenhuma ação necessária.</td>
             </tr>
             
+            <tr>
+                <td class="text-center font-mono">#17</td>
+                <td><span class="badge badge-info">INFO</span></td>
+                <td class="font-mono text-sm"><strong>Route53:Zones</strong><br><span class="text-muted">AWS Route 53</span></td>
+                <td><span class="category-tag">Security</span></td>
+                <td>Nenhuma zona hospedada encontrada.</td>
+                <td class="remediation-cell">Nenhuma ação necessária.</td>
+            </tr>
+            
             </tbody>
         </table>
+    </div>
+
+    <!-- Cards Mobile (Visíveis apenas em Celular) -->
+    <div class="mobile-findings-wrapper">
+        
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-critical">CRITICAL</span>
+                    <span class="category-tag">Security</span>
+                    <span class="font-mono text-muted">#01</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>Account Root</strong>
+                    <span class="text-muted"> • AWS IAM</span>
+                </div>
+                <div class="m-card-issue">
+                    A conta Root NÃO possui MFA (Autenticação Multi-Fator) habilitado.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Ative MFA imediatamente na conta Root no console IAM.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-critical">CRITICAL</span>
+                    <span class="category-tag">Security</span>
+                    <span class="font-mono text-muted">#02</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>SG: sg-0c564c91cdf965644 (assessment-web-sg) [us-east-1]</strong>
+                    <span class="text-muted"> • AWS Network/VPC</span>
+                </div>
+                <div class="m-card-issue">
+                    Porta 22 (SSH) está aberta diretamente para a Internet (0.0.0.0/0).
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Restringir a porta 22 para VPN, Bastion Host ou IPs de origem específicos.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="category-tag">Security</span>
+                    <span class="font-mono text-muted">#03</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>User: assessment_aws</strong>
+                    <span class="text-muted"> • AWS IAM</span>
+                </div>
+                <div class="m-card-issue">
+                    Usuário com acesso ao Console Web sem MFA configurado.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Exigir MFA para o usuário 'assessment_aws'.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="category-tag">Security</span>
+                    <span class="font-mono text-muted">#04</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>Account S3 Block Public Access (669076482555)</strong>
+                    <span class="text-muted"> • AWS S3</span>
+                </div>
+                <div class="m-card-issue">
+                    Nenhum 'S3 Block Public Access' configurado na conta.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Ativar S3 Block Public Access globalmente no console S3.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="category-tag">Security</span>
+                    <span class="font-mono text-muted">#05</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>EC2: i-0a71c04111576cebb (lab-bastion-win) [us-east-1]</strong>
+                    <span class="text-muted"> • AWS EC2/EBS</span>
+                </div>
+                <div class="m-card-issue">
+                    Instância permite IMDSv1 (Tokens de metadados opcionais), vulnerável a ataques de SSRF.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Configurar 'HttpTokens=required' para forçar IMDSv2 em todas as instâncias.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="category-tag">Security</span>
+                    <span class="font-mono text-muted">#06</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>EC2: i-0152d2c6f4ed60855 (lab-database-cache) [us-east-1]</strong>
+                    <span class="text-muted"> • AWS EC2/EBS</span>
+                </div>
+                <div class="m-card-issue">
+                    Instância permite IMDSv1 (Tokens de metadados opcionais), vulnerável a ataques de SSRF.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Configurar 'HttpTokens=required' para forçar IMDSv2 em todas as instâncias.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="category-tag">Security</span>
+                    <span class="font-mono text-muted">#07</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>EC2: i-03721e04ee72d3e95 (lab-legacy-service) [us-east-1]</strong>
+                    <span class="text-muted"> • AWS EC2/EBS</span>
+                </div>
+                <div class="m-card-issue">
+                    Instância permite IMDSv1 (Tokens de metadados opcionais), vulnerável a ataques de SSRF.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Configurar 'HttpTokens=required' para forçar IMDSv2 em todas as instâncias.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="category-tag">Security</span>
+                    <span class="font-mono text-muted">#08</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>Account: Password Policy</strong>
+                    <span class="text-muted"> • AWS IAM</span>
+                </div>
+                <div class="m-card-issue">
+                    Nenhuma política de senha customizada definida para a conta.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Configurar política exigindo mínimo 14 caracteres, números, símbolos e expiração.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="category-tag">Security</span>
+                    <span class="font-mono text-muted">#09</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>VPC: vpc-0140d40c519ff28ee (Default: False) [us-east-1]</strong>
+                    <span class="text-muted"> • AWS Network/VPC</span>
+                </div>
+                <div class="m-card-issue">
+                    VPC não possui VPC Flow Logs habilitado para auditoria e monitoramento de tráfego de rede.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Habilitar VPC Flow Logs enviando para o CloudWatch Logs ou bucket S3.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="category-tag">Security</span>
+                    <span class="font-mono text-muted">#10</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>VPC: vpc-07e9c8c670c7de1dc (Default: True) [us-east-1]</strong>
+                    <span class="text-muted"> • AWS Network/VPC</span>
+                </div>
+                <div class="m-card-issue">
+                    VPC não possui VPC Flow Logs habilitado para auditoria e monitoramento de tráfego de rede.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Habilitar VPC Flow Logs enviando para o CloudWatch Logs ou bucket S3.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-low">LOW</span>
+                    <span class="category-tag">Governance</span>
+                    <span class="font-mono text-muted">#11</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>EC2: i-0a71c04111576cebb (lab-bastion-win) [us-east-1]</strong>
+                    <span class="text-muted"> • AWS EC2/EBS</span>
+                </div>
+                <div class="m-card-issue">
+                    Instância sem tags de governança recomendadas: environment, owner.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Adicionar tags padronizadas para alocação de custos e rastreabilidade.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-low">LOW</span>
+                    <span class="category-tag">Governance</span>
+                    <span class="font-mono text-muted">#12</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>EC2: i-0fa15e5eb4455312f (lab-app-backend) [us-east-1]</strong>
+                    <span class="text-muted"> • AWS EC2/EBS</span>
+                </div>
+                <div class="m-card-issue">
+                    Instância sem tags de governança recomendadas: environment, owner.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Adicionar tags padronizadas para alocação de custos e rastreabilidade.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-low">LOW</span>
+                    <span class="category-tag">Governance</span>
+                    <span class="font-mono text-muted">#13</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>EC2: i-0152d2c6f4ed60855 (lab-database-cache) [us-east-1]</strong>
+                    <span class="text-muted"> • AWS EC2/EBS</span>
+                </div>
+                <div class="m-card-issue">
+                    Instância sem tags de governança recomendadas: environment, owner.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Adicionar tags padronizadas para alocação de custos e rastreabilidade.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-low">LOW</span>
+                    <span class="category-tag">Governance</span>
+                    <span class="font-mono text-muted">#14</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>EC2: i-00cc032ee2effef12 (lab-web-frontend) [us-east-1]</strong>
+                    <span class="text-muted"> • AWS EC2/EBS</span>
+                </div>
+                <div class="m-card-issue">
+                    Instância sem tags de governança recomendadas: environment, owner.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Adicionar tags padronizadas para alocação de custos e rastreabilidade.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-low">LOW</span>
+                    <span class="category-tag">Governance</span>
+                    <span class="font-mono text-muted">#15</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>EC2: i-03721e04ee72d3e95 (lab-legacy-service) [us-east-1]</strong>
+                    <span class="text-muted"> • AWS EC2/EBS</span>
+                </div>
+                <div class="m-card-issue">
+                    Instância sem tags de governança recomendadas: environment, owner.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Adicionar tags padronizadas para alocação de custos e rastreabilidade.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-info">INFO</span>
+                    <span class="category-tag">Security</span>
+                    <span class="font-mono text-muted">#16</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>S3:Buckets</strong>
+                    <span class="text-muted"> • AWS S3</span>
+                </div>
+                <div class="m-card-issue">
+                    Nenhum bucket S3 encontrado na conta.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Nenhuma ação necessária.
+                </div>
+            </div>
+            
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge badge-info">INFO</span>
+                    <span class="category-tag">Security</span>
+                    <span class="font-mono text-muted">#17</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>Route53:Zones</strong>
+                    <span class="text-muted"> • AWS Route 53</span>
+                </div>
+                <div class="m-card-issue">
+                    Nenhuma zona hospedada encontrada.
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    Nenhuma ação necessária.
+                </div>
+            </div>
+            
     </div>
 
     <!-- Footer Oficial SoftwareOne -->

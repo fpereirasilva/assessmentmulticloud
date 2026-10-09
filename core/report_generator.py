@@ -1,8 +1,8 @@
 """
 Gerador de Relatórios Oficiais SoftwareOne — Assessment AWS Multi-Conta
-Layout: Landscape (Paisagem / 16:9 / A4 Paisagem)
-Estilo: Fundo Branco Editorial Monocromático Premium (Black & White Editorial)
-Branding Oficial: SoftwareOne ("Driven to Deliver", "All in One", Cloud-First & FinOps-optimized)
+Layout: Híbrido Responsivo (Desktop Widescreen / A4 Landscape + Mobile First para Celulares)
+Estilo: Fundo Branco Editorial Monocromático Premium
+Branding Oficial: SoftwareOne ("Driven to Deliver", "All in One")
 """
 import os
 import json
@@ -62,18 +62,22 @@ class ReportGenerator:
         total = len(self.findings)
         logo_src = self._get_logo_base64()
 
-        # Cálculo de Score de Maturidade da Nuvem SoftwareOne (0 a 100)
         penalty = (summary.get("CRITICAL", 0) * 15) + (summary.get("HIGH", 0) * 5) + (summary.get("MEDIUM", 0) * 2)
         maturity_score = max(10, min(100, 100 - penalty))
 
         order = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"]
         sorted_findings = sorted(self.findings, key=lambda x: order.index(x.get("severity", "INFO").upper()))
 
-        # Linhas da tabela de findings
+        # Tabela Desktop
         table_rows = []
+        # Cards Mobile
+        mobile_cards = []
+
         for idx, f in enumerate(sorted_findings, 1):
             sev = f.get("severity", "INFO").upper()
             badge_class = f"badge-{sev.lower()}"
+
+            # Linha da tabela (Desktop)
             table_rows.append(f"""
             <tr>
                 <td class="text-center font-mono">#{idx:02d}</td>
@@ -85,15 +89,47 @@ class ReportGenerator:
             </tr>
             """)
 
+            # Card Mobile (Celular)
+            mobile_cards.append(f"""
+            <div class="mobile-finding-card">
+                <div class="m-card-header">
+                    <span class="badge {badge_class}">{sev}</span>
+                    <span class="category-tag">{f.get('category', 'Security')}</span>
+                    <span class="font-mono text-muted">#{idx:02d}</span>
+                </div>
+                <div class="m-card-resource">
+                    <strong>{f.get('resource')}</strong>
+                    <span class="text-muted"> • AWS {f.get('service')}</span>
+                </div>
+                <div class="m-card-issue">
+                    {f.get('issue')}
+                </div>
+                <div class="remediation-cell">
+                    <div class="rem-title">Remediação Recomendada:</div>
+                    {f.get('remediation')}
+                </div>
+            </div>
+            """)
+
         return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>SoftwareOne — AWS Infrastructure Assessment &amp; Well-Architected</title>
+
+<!-- Favicons Oficiais SoftwareOne -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- Fontes -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
     @page {{
         size: A4 landscape;
@@ -393,7 +429,7 @@ class ReportGenerator:
         font-size: 12.5px;
     }}
 
-    /* Table */
+    /* Desktop Table */
     .table-container {{
         overflow-x: auto;
         background: #ffffff;
@@ -447,10 +483,52 @@ class ReportGenerator:
         border-left: 3px solid #000000;
         line-height: 1.4;
     }}
+    .rem-title {{
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+        color: #737373;
+        margin-bottom: 4px;
+        font-family: 'Inter', sans-serif;
+    }}
     .text-center {{ text-align: center; }}
     .font-mono {{ font-family: 'JetBrains Mono', monospace; }}
     .text-sm {{ font-size: 11.5px; }}
     .text-muted {{ color: #737373; }}
+
+    /* Mobile Findings Cards (Oculto no Desktop) */
+    .mobile-findings-wrapper {{
+        display: none;
+        flex-direction: column;
+        gap: 14px;
+    }}
+    .mobile-finding-card {{
+        background: #ffffff;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    }}
+    .m-card-header {{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+    }}
+    .m-card-resource {{
+        font-size: 13px;
+        font-family: 'JetBrains Mono', monospace;
+        margin-bottom: 8px;
+        color: #000000;
+    }}
+    .m-card-issue {{
+        font-size: 12.5px;
+        color: #404040;
+        margin-bottom: 12px;
+        line-height: 1.45;
+    }}
 
     /* Footer */
     .footer {{
@@ -462,9 +540,110 @@ class ReportGenerator:
         align-items: center;
         font-size: 11.5px;
         color: #525252;
+        flex-wrap: wrap;
+        gap: 12px;
     }}
     .footer strong {{
         color: #000000;
+    }}
+
+    /* RESPONSIVIDADE PARA CELULAR (SMARTPHONES < 768px) */
+    @media screen and (max-width: 768px) {{
+        body {{
+            padding: 8px;
+            font-size: 12px;
+        }}
+        .page-wrapper {{
+            padding: 16px 14px;
+            border-radius: 6px;
+        }}
+        .brand-strap {{
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            font-size: 9.5px;
+            margin-bottom: 16px;
+        }}
+        .header {{
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+            padding-bottom: 18px;
+            margin-bottom: 20px;
+        }}
+        .header-left {{
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }}
+        .header-logo img {{
+            height: 42px;
+        }}
+        .header-title h1 {{
+            font-size: 18px;
+        }}
+        .header-title p {{
+            font-size: 11.5px;
+        }}
+        .header-meta {{
+            text-align: left;
+            font-size: 10px;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 10px;
+            width: 100%;
+        }}
+        .actions-bar {{
+            justify-content: stretch;
+            margin-bottom: 16px;
+        }}
+        .actions-bar .btn {{
+            width: 100%;
+            justify-content: center;
+        }}
+        /* KPIs no Celular: 2 colunas com Score ocupando largura total */
+        .grid-kpis {{
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }}
+        .kpi-score {{
+            grid-column: span 2;
+            padding: 16px;
+        }}
+        .kpi-score .score-val {{
+            font-size: 38px;
+        }}
+        .kpi-card {{
+            padding: 12px;
+        }}
+        .kpi-num {{
+            font-size: 22px;
+        }}
+        /* Roadmap no Celular: Empilhado */
+        .grid-3col {{
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }}
+        /* Esconde tabela pesada e ativa Cards Mobile */
+        .table-container {{
+            display: none;
+        }}
+        .mobile-findings-wrapper {{
+            display: flex;
+        }}
+        .section-title {{
+            font-size: 14px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            margin: 28px 0 14px 0;
+        }}
+        .footer {{
+            flex-direction: column;
+            align-items: flex-start;
+            font-size: 10.5px;
+        }}
     }}
 
     /* PRINT MEDIA (A4 LANDSCAPE) */
@@ -482,6 +661,12 @@ class ReportGenerator:
         }}
         .actions-bar {{
             display: none !important;
+        }}
+        .mobile-findings-wrapper {{
+            display: none !important;
+        }}
+        .table-container {{
+            display: block !important;
         }}
         tr {{
             page-break-inside: avoid !important;
@@ -501,7 +686,7 @@ class ReportGenerator:
         <span class="slogan">ALL IN ONE — DRIVEN TO DELIVER</span>
     </div>
 
-    <!-- Actions Bar (Apenas Web) -->
+    <!-- Actions Bar (Web Only) -->
     <div class="actions-bar">
         <button class="btn btn-primary" onclick="window.print()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
@@ -569,7 +754,7 @@ class ReportGenerator:
 
     <div class="grid-3col">
         <div class="plan-card">
-            <h3>Fase 1: Quick-Wins &amp; Estancamento de Risco <span class="horizon">0 a 15 Dias</span></h3>
+            <h3>Fase 1: Quick-Wins &amp; Estancamento <span class="horizon">0 a 15 Dias</span></h3>
             <ul class="plan-list">
                 <li><strong>MFA Obrigatório no Root &amp; Console IAM</strong>Blindagem imediata das credenciais mestras e imposição de MFA via política para todos os usuários com acesso console.</li>
                 <li><strong>Fechamento do Perímetro Externo (SG 0.0.0.0/0)</strong>Remover exposição pública direta das portas 22 (SSH) e 3389 (RDP). Adotar AWS Systems Manager (SSM) Session Manager ou Bastion privado.</li>
@@ -594,7 +779,7 @@ class ReportGenerator:
         </div>
     </div>
 
-    <!-- Tabela Detalhada dos Apontamentos Técnicos -->
+    <!-- Tabela Detalhada (Desktop) -->
     <div class="section-title">
         Inventário Detalhado de Apontamentos &amp; Recomendações Técnicas
         <span>Classificado rigorosamente por criticidade decrescente</span>
@@ -616,6 +801,11 @@ class ReportGenerator:
                 {''.join(table_rows)}
             </tbody>
         </table>
+    </div>
+
+    <!-- Cards Mobile (Visíveis apenas em Celular) -->
+    <div class="mobile-findings-wrapper">
+        {''.join(mobile_cards)}
     </div>
 
     <!-- Footer Oficial SoftwareOne -->
